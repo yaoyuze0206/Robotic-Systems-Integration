@@ -1,0 +1,49 @@
+(1)sudo apt update
+sudo apt install \
+    ros-jazzy-vision-opencv \
+    ros-jazzy-image-transport \
+    ros-jazzy-image-transport-plugins \
+    python3-opencv
+(2)source /opt/ros/jazzy/setup.bash
+(3)# 创建工作空间和源码目录
+mkdir -p ~/cv_ws/src
+cd ~/cv_ws/src
+# 创建ROS 2包
+ros2 pkg create --build-type ament_python cv_robotics_tutorial \
+    --dependencies rclpy sensor_msgs cv_bridge image_transport std_msgs
+# 构建工作空间
+cd ~/cv_ws
+colcon build
+# 设置环境
+source install/setup.bash
+(4)首先关闭所有终端,通过以下方式将摄像头连接到虚拟机：VM => Removable Devices =>Find the camera) => Connect
+通过以下方式将USB控制器设置为USB 3.1：VM => Settings => USB Controller =>USB 3.1
+在以下路径建立image_publisher.py：“~/cv_ws/src/cv_robotics_tutorial/cv_robotics_tutorial/”
+打开set up.py，在“console_scripts”添加'image_publisher = cv_robotics_tutorial.image_publisher:main'
+(5)新终端：cd ~/cv_ws
+colcon build --packages-select cv_robotics_tutorial
+source install/setup.bash
+(6)运行：ros2 run cv_robotics_tutorial image_publisher
+通过ros2 topic list查看话题
+(7)在以下路径建立qr_scanner.py：“~/cv_ws/src/cv_robotics_tutorial/cv_robotics_tutorial/”  
+打开set up.py，在“console_scripts”添加'qr_scanner = cv_robotics_tutorial.qr_scanner:main',记得加逗号！
+新终端：cd ~/cv_ws
+colcon build --packages-select cv_robotics_tutorial
+source install/setup.bash
+(8)运行：ros2 run cv_robotics_tutorial qr_scanner
+(9)关闭所有终端,开新终端:pip3 install onnxruntime opencv-python --break-system-packages
+pip3 install numpy==1.26.4 --break-system-packages
+(10)在“~/cv_ws/src/cv_robotics_tutorial/cv_robotics_tutorial/”建一个models文件夹，把yolov8复制进去
+(11)在“~/cv_ws/src/cv_robotics_tutorial/cv_robotics_tutorial/”里创建coco_classes.py
+(12)“~/cv_ws/src/cv_robotics_tutorial/cv_robotics_tutorial/”再创建yolo_onnx_detector.py
+打开set up.py，在“console_scripts”添加'yolo_detector = cv_robotics_tutorial.yolo_onnx_detector:main'记得加逗号！
+(13)新终端：cd ~/cv_ws
+colcon build --packages-select cv_robotics_tutorial
+source install/setup.bash
+(14)新终端：cd ~/cv_ws
+ source install/setup.bash
+ ros2 run cv_robotics_tutorial image_publisher
+(15)新终端：cd ~/cv_ws
+ source install/setup.bash
+ ros2 run cv_robotics_tutorial yolo_detector
+
