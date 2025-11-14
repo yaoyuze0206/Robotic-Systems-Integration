@@ -1,0 +1,11 @@
+slam_toolbox:
+  ros__parameters:
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    occupancy_threshold: 0.65
+    resolution: 0.05
+    map_start_pose: [0.0, 0.0, 0.0]
+    map_start_at_dock: True
+    use_scan_matching: True
+    use_scan_barycenter: True
